@@ -1,0 +1,18 @@
+homepage: http://hanger25.blogspot.com/
+
+symfony 1.4 のCacheHelperの機能を拡張する。
+
+sfViewCacheManagerのソースを見た感じでは、module名とaction名のみを基準にキャッシュ管理をしており、独自の内部URI(default/indexのような）をもたないcacheは制御が行えず、action cacheも同時に保存してしまうような仕様になっている。
+
+機能追加
+
+1 - 余分なaction cacheを保存しないように。
+2 - 別途引数にinternalURIを追加して、複数のページで同一のキャッシュを使用できるように。
+3 - すでにキャッシュ済みか調べるための関数の追加。
+
+使い方
+
+cache関数の代わりにhr_cache関数を使用する。
+cache_save関数の代わりにhr_cache_save関数を使用する。
+hr_is_cached()関数はactionですでにキャッシュ中か調べて余分な処理を行わないようにするようなときに使用する。hr_is_cachedを実行した際の結果はstatic変数に保存され、その後hr_cacheが使用されたときと結果が同じになるよう保証する。(実行されるタイミングが異なるため、lifetimeが切れて結果が異なる場合があるため)
+第三引数のinternaURIは例えば、GETで値を設定する場合、’default/index?a=123’と’default/index?a=abc’では別のキャッシュが保存されるが、internalURIに’default/index’と指定することで共通のが使用される。

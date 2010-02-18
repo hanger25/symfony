@@ -1,0 +1,17 @@
+sorry, this README is automatic translation from README.ja.
+
+The function of CacheHelper of symfony 1.4 is extended. 
+
+With the touch which looked at the sauce of sfViewCacheManagerCash management is carried out only on the basis of the module name and the action name, and cache without the original inside URI (it is (like default/index)) is uncontrollable, and has become the specification which action cache also saves simultaneously. 
+
+Functional addition 
+
+1  - Excessive action cache is not saved. 
+2  - internalURI is separately added to an argument and the same cash can be used on two or more pages. 
+3  - The addition of the function for cash ending or already investigating. 
+
+Usage
+
+A hr_cache function is used instead of a cache function. 
+A hr_cache_save function is used instead of a cache_save function. 
+A hr_is_cached() function is action, and the inside of cash, or when it investigates and is made not to perform excessive processing, it is already used. The result at the time of performing hr_is_cached is saved at a static variable, and is guaranteed that the time of hr_cache being used after that and a result become the same. (Since lifetime may go out since the timing performed differs, and results may differ) internaURI of the third argument -- for exampleWhen setting up a value by GET, another cash is saved in 'default/index?a=123' and 'default/index?a=abc', but that common is used for internalURI by specifying it as 'default/index'. 

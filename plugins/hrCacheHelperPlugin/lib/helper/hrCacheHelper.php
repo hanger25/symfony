@@ -40,7 +40,7 @@ function hr_is_cached($name, $lifeTime = 86400, $internalUri = NULL)
    
     list($route_name, $params) = $controller->convertUrlStringToParameters($internalUri);
     $is_cacheable = $cache->isActionCacheable( $params['module'], $params['action'] );
-    $cache->addCache($params['module'], $params['action'], array('withLayout' => false, 'lifeTime' => $lifeTime, 'clientLifeTime' => $lifeTime, 'vary' => $vary));
+    $cache->addCache($params['module'], $params['action'], array('withLayout' => false, 'lifeTime' => $lifeTime, 'clientLifeTime' => $lifeTime, 'vary' => array()));
     
     // get data from cache if available
     $r_internalUri = $internalUri.(strpos($internalUri, '?') ? '&' : '?').'_sf_cache_key='.$name;
@@ -86,7 +86,7 @@ function hr_cache($name, $lifeTime = 86400, $internalUri = NULL)
     // add cache config to cache manager
     list($route_name, $params) = $controller->convertUrlStringToParameters($internalUri);
     $is_cacheable = $cache->isActionCacheable( $params['module'], $params['action'] );
-    $cache->addCache($params['module'], $params['action'], array('withLayout' => false, 'lifeTime' => $lifeTime, 'clientLifeTime' => $lifeTime, 'vary' => $vary));
+    $cache->addCache($params['module'], $params['action'], array('withLayout' => false, 'lifeTime' => $lifeTime, 'clientLifeTime' => $lifeTime, 'vary' => array()));
     // get data from cache if available
     $r_internalUri = $internalUri.(strpos($internalUri, '?') ? '&' : '?').'_sf_cache_key='.$name;
     $cache_key = $cache->generateCacheKey( $r_internalUri );
